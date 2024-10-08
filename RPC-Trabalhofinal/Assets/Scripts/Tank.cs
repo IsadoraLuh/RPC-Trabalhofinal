@@ -7,7 +7,8 @@ public class Tank : MonoBehaviour
     Rigidbody2D rb;
     public float rotationSpeed = 5;
 
-    // Start is called before the first frame update
+    Vector2 moveAmount;
+    public float moveSpeed = 1;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -17,11 +18,12 @@ public class Tank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        moveAmount = transform.up * Input.GetAxisRaw("Vertical");
 
     }
     private void FixedUpdate()
     {
         rb.MoveRotation(rb.rotation - Input.GetAxisRaw("Horizontal")* rotationSpeed);
+        rb.MovePosition(rb.position + moveAmount * moveSpeed);
     }
 }
