@@ -5,6 +5,7 @@ using UnityEngine;
 public class Tank : MonoBehaviour
 {
     Rigidbody2D rb;
+    public float rotationSpeed = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,6 @@ public class Tank : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.MoveRotation(rb.rotation + Input.GetAxisRaw("Horizontal"));
+        rb.MoveRotation(rb.rotation - Input.GetAxisRaw("Horizontal")* rotationSpeed);
     }
 }
