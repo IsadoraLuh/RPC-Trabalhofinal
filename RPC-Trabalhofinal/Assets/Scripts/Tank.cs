@@ -8,7 +8,10 @@ public class Tank : MonoBehaviour
     public float rotationSpeed = 5;
 
     Vector2 moveAmount;
-    public float moveSpeed = 1;
+    public float moveSpeed = 0.09f;
+
+    public GameObject TankShellPrebab;
+    public Transform spawnLocation;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,10 +23,15 @@ public class Tank : MonoBehaviour
     {
         moveAmount = transform.up * Input.GetAxisRaw("Vertical");
 
+        if(Input.GetButtonDown("Fire1"))
+        {
+            GameObject bullet = Instantiate(TankShellPrebab, spawnLocation.position, spawnLocation.rotation  );
+        }
+
     }
     private void FixedUpdate()
     {
         rb.MoveRotation(rb.rotation - Input.GetAxisRaw("Horizontal")* rotationSpeed);
-        rb.MovePosition(rb.position + moveAmount * moveSpeed);
+        rb.MovePosition(rb.position + new Vector2( 0, moveSpeed));
     }
 }
