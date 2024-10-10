@@ -14,7 +14,8 @@ public class Tank : MonoBehaviour
     public Transform spawnLocation;
 
     float shootTime = 0;
-    public float coolDown = 1;
+    public float coolDown = 3;
+    public int health = 5;
 
     void Start()
     {
@@ -41,5 +42,15 @@ public class Tank : MonoBehaviour
     {
         rb.MoveRotation(rb.rotation - Input.GetAxisRaw("Horizontal")* rotationSpeed);
         rb.MovePosition(rb.position + (Vector2)transform.up * moveSpeed);
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        health = health - 1;
+
+        if(health <1)
+        {
+            Destroy(gameObject);
+        }
     }
 }

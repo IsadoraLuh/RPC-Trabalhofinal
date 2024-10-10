@@ -5,7 +5,7 @@ using UnityEngine;
 public class TankShell : MonoBehaviour
 {
     Rigidbody2D rb;
-    public float speed = 2, damage = 2;
+    public float speed = 10, damage = 2;
     
     void Start()
     {
