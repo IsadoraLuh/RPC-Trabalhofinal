@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Tank : MonoBehaviourPunCallbacks, IDamageable, IMovable
+public class Tank : MonoBehaviourPunCallbacks, IMovable
 {
     Rigidbody2D rb;
     public float rotationSpeed = 5;
@@ -18,10 +18,10 @@ public class Tank : MonoBehaviourPunCallbacks, IDamageable, IMovable
     {
         rb = GetComponent<Rigidbody2D>();
 
-        if (photonView.IsMine)
-        {
-            Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-        }
+        //if (photonView.IsMine)
+      //  {
+          //  Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+       // }
     }
 
     private void Update()
@@ -55,24 +55,24 @@ public class Tank : MonoBehaviourPunCallbacks, IDamageable, IMovable
         Instantiate(tankShellPrefab, spawnLocation.position, spawnLocation.rotation);
     }
 
-    public void TakeDamage(float amount)
+   /* public void TakeDamage(float amount)
     {
         health -= (int)amount;
-        if (health <= 0)
+        if (health <= 0) 
         {
             photonView.RPC("Respawn", RpcTarget.All);
         }
     }
 
-    [PunRPC]
+   s [PunRPC]
     private void Respawn()
     {
         // Código para respawn em posição aleatória do mapa
         Vector2 respawnPosition = PlayerManager.Instance.spawnPoints[Random.Range(0, PlayerManager.Instance.spawnPoints.Length)].position;
     transform.position = respawnPosition;
-    health = 5;
+    health = 100;
     }
-
+   */
     public void Move(Vector2 direction)
     {
         rb.MovePosition(rb.position + (Vector2)transform.up * moveSpeed);

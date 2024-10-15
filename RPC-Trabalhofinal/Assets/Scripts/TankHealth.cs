@@ -12,7 +12,9 @@ public class TankHealth : MonoBehaviourPun, IDamageable
     private GameManager gameManager;
 
     private void Start()
-    { if(photonView.IsMine)
+
+    {
+        if(photonView.IsMine)
         {
             Respawn();
         }
