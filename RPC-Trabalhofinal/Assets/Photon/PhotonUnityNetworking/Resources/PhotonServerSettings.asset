@@ -40,6 +40,10 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - LoadSceneRPC
+  - ShowEndGameMessage
+  - UpdateTimer
+  - Respawn
+  - Shoot
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

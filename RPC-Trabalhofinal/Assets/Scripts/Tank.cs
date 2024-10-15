@@ -1,56 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Tank : MonoBehaviour
+public class Tank : MonoBehaviourPunCallbacks, IDamageable, IMovable
 {
     Rigidbody2D rb;
     public float rotationSpeed = 5;
-
-    Vector2 moveAmount;
     public float moveSpeed = 0.09f;
-
-    public GameObject TankShellPrebab;
+    public GameObject tankShellPrefab;
     public Transform spawnLocation;
-
-    float shootTime = 0;
-    public float coolDown = 3;
     public int health = 5;
+    public float shootCooldown = 3f;
+    private float shootTime = 0;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+
+        if (photonView.IsMine)
+        {
+            Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        moveAmount = transform.up * Input.GetAxisRaw("Vertical");
+        if (!photonView.IsMine) return;
 
-        if(Input.GetButtonDown("Fire1"))
+        Vector2 moveDirection = new Vector2(0, Input.GetAxisRaw("Vertical"));
+        Move(moveDirection);
+
+        if (Input.GetButtonDown("Fire1") && Time.time > shootTime)
         {
-            if(Time.time> shootTime)
-            {
-                GameObject bullet = Instantiate(TankShellPrebab, spawnLocation.position, spawnLocation.rotation);
-                shootTime = Time.time + coolDown;
-            }
+            photonView.RPC("Shoot", RpcTarget.All);
+            shootTime = Time.time + shootCooldown;
         }
 
+        float rotationAmount = -Input.GetAxisRaw("Horizontal") * rotationSpeed;
+        Rotate(rotationAmount);
     }
+
     private void FixedUpdate()
     {
-        rb.MoveRotation(rb.rotation - Input.GetAxisRaw("Horizontal")* rotationSpeed);
+        if (!photonView.IsMine) return;
+
         rb.MovePosition(rb.position + (Vector2)transform.up * moveSpeed);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    [PunRPC]
+    public void Shoot()
     {
-        health = health - 1;
+        Instantiate(tankShellPrefab, spawnLocation.position, spawnLocation.rotation);
+    }
 
-        if(health <1)
+    public void TakeDamage(float amount)
+    {
+        health -= (int)amount;
+        if (health <= 0)
         {
-            Destroy(gameObject);
+            photonView.RPC("Respawn", RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void Respawn()
+    {
+        // Código para respawn em posição aleatória do mapa
+        Vector2 respawnPosition = PlayerManager.Instance.spawnPoints[Random.Range(0, PlayerManager.Instance.spawnPoints.Length)].position;
+    transform.position = respawnPosition;
+    health = 5;
+    }
+
+    public void Move(Vector2 direction)
+    {
+        rb.MovePosition(rb.position + (Vector2)transform.up * moveSpeed);
+    }
+
+    public void Rotate(float amount)
+    {
+        rb.MoveRotation(rb.rotation + amount);
     }
 }
