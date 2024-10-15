@@ -11,7 +11,7 @@ public class Tank : MonoBehaviourPunCallbacks, IDamageable, IMovable
     public GameObject tankShellPrefab;
     public Transform spawnLocation;
     public int health = 5;
-    public float shootCooldown = 3f;
+    public float shootCooldown = 2f;
     private float shootTime = 0;
 
     private void Start()
@@ -35,6 +35,7 @@ public class Tank : MonoBehaviourPunCallbacks, IDamageable, IMovable
         {
             photonView.RPC("Shoot", RpcTarget.All);
             shootTime = Time.time + shootCooldown;
+            Debug.Log("Tiroo");
         }
 
         float rotationAmount = -Input.GetAxisRaw("Horizontal") * rotationSpeed;

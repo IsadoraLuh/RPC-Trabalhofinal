@@ -3,10 +3,12 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public Text timerText; // Referência para o texto do timer
+    public TextMeshProUGUI timerText; // Referência para o texto do timer
     public GameObject scorePanel; // Referência para o painel que conterá os scores
     public GameObject scoreEntryPrefab; // Prefab para a entrada de placar
     public int matchDuration = 120; // Duração de 2 minutos (120 segundos)
@@ -18,6 +20,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         timer = matchDuration;
         UpdateScoreUI();
+
+      
     }
 
     void Update()
@@ -70,11 +74,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     void EndGame()
+
     {
+        scorePanel.SetActive(true);
         string resultMessage = "Game Over!";
 
         photonView.RPC("ShowEndGameMessage", RpcTarget.All, resultMessage);
-        PhotonNetwork.LoadLevel("LobbyScene"); // Retorna para o lobby ou uma cena final
+        // Espera alguns segundos antes de voltar para o lobby
+        StartCoroutine(ReturnToLobbyAfterDelay(5)); // Aguarda 5 segundos
+    }
+
+    private IEnumerator ReturnToLobbyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        PhotonNetwork.LoadLevel("LobbyScene"); // Retorna para o lobby
     }
 
     [PunRPC]
