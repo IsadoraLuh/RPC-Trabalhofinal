@@ -18,9 +18,9 @@ public class Tank : MonoBehaviourPunCallbacks, IMovable
     {
         rb = GetComponent<Rigidbody2D>();
 
-        //if (photonView.IsMine)
-      //  {
-          //  Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+       //if (photonView.IsMine)
+      // {
+          // Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
        // }
     }
 
