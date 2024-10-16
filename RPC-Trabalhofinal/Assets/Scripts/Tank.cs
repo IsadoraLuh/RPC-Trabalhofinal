@@ -82,4 +82,15 @@ public class Tank : MonoBehaviourPunCallbacks, IMovable
     {
         rb.MoveRotation(rb.rotation + amount);
     }
+
+    [PunRPC]
+    private void Initialize()
+    {
+        if (!photonView.IsMine)
+        {
+            Color color = Color.white;
+            color.a = 0.1f;
+            GetComponent<SpriteRenderer>().color = color;
+        }
+    }
 }
