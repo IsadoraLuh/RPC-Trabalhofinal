@@ -4607,6 +4607,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4708,6 +4709,20 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 0
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7899d348ac8b4b1418566f8a3cece8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothSpeed: 0.125
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &575263752
 GameObject:
   m_ObjectHideFlags: 0
@@ -5504,7 +5519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 0.9
   moveSpeed: 0.03
-  tankShellPrefab: {fileID: 5801586899373555338, guid: 0427a4d64281dad40a1e864a66db43be, type: 3}
+  tankShellPrefab: {fileID: 6207279722962423063, guid: e6508b59a3302024f9cafa7af79341c8, type: 3}
   spawnLocation: {fileID: 274117245}
   health: 5
   shootCooldown: 2
@@ -5516,7 +5531,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823831360}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -5567,7 +5582,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 2.4156566, y: 1.2392652}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5578,7 +5593,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8889942, y: 0.846074}
   m_EdgeRadius: 0
 --- !u!4 &1823831365
 Transform:
@@ -5589,7 +5604,7 @@ Transform:
   m_GameObject: {fileID: 1823831360}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.82078695, w: -0.5712346}
-  m_LocalPosition: {x: -2.8994665, y: -2.47466, z: -0.039399333}
+  m_LocalPosition: {x: 2.4, y: 0.36, z: -0.039399333}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
