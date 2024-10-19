@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 // Define a classe MenuManager que herda de MonoBehaviour, permitindo que seja usada como um componente em GameObjects.
 public class MenuManager : MonoBehaviour
@@ -11,6 +12,14 @@ public class MenuManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI nicknameUI, roomNameUI, playerList;
     [SerializeField] Button joinButton, createButton, leaveButton, startButton;
     [SerializeField] GameObject menu, lobby;
+    //Referência ao botão de iniciar partida
+    public Button buttonIniciarPartida;
+
+    //Referência ao botão de recomeçar a partida
+    public Button buttonRecomecarPartida;
+
+    //Referência ao texto da UI de status
+    public Text textStatus;
 
     // Declara uma instância estática da classe MenuManager
     public static MenuManager instance;
@@ -102,5 +111,26 @@ public class MenuManager : MonoBehaviour
         // Define a visibilidade dos GameObjects menu e lobby.
         menu.SetActive(!onLobby);
         lobby.SetActive(onLobby);
+    }
+
+    public void MostrarResultados()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            buttonRecomecarPartida.gameObject.SetActive(true);
+        }
+    }
+
+    [PunRPC]
+    public void RecomecarPartidaParaTodos()
+    {
+        //Esconde o texto e o botão pois a partida vai iniciar
+        textStatus.gameObject.SetActive(false);
+        buttonIniciarPartida.gameObject.SetActive(false);
+        buttonRecomecarPartida.gameObject.SetActive(false);
+
+        //Procura o objeto e classe GameManager e inicia a partida
+        var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gameManager.IniciarPartida();
     }
 }
