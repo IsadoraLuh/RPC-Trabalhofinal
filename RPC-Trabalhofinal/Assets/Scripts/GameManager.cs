@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<GameObject> localizacoesSpawn;
 
     //Referência ao texto de UI que tem o cronômetro
-    public TextMeshPro textTimer;
+    public Text textTimer;
 
     //Tempo de partida em segundos
     public float tempoDePartida = 120f;
