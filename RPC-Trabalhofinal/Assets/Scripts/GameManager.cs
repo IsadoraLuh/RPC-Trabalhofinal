@@ -1,19 +1,19 @@
-using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Linq;
+using TMPro;
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     //Referência as localizações que cada jogador começa
     public List<GameObject> localizacoesSpawn;
 
     //Referência ao texto de UI que tem o cronômetro
-    public Text textTimer;
+    public TextMeshPro textTimer;
 
     //Tempo de partida em segundos
     public float tempoDePartida = 120f;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void IniciarPartida()
     {
         ehGameOver = false;
-        FindObjectOfType<PontuacaoManager>().ResetarPontuacao(PhotonNetwork.LocalPlayer);
+        FindObjectOfType<Score>().ResetarPontuacao(PhotonNetwork.LocalPlayer);
 
         //Faz o cronometro aparecer
         tempoDePartidaAtual = tempoDePartida;
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //Marca o jogo como finalizado
         ehGameOver = true;
 
-        FindObjectsByType<TanqueController>(FindObjectsSortMode.None).ToList().ForEach(tanque =>
+        FindObjectsByType<TanK>(FindObjectsSortMode.None).ToList().ForEach(tanque =>
         {
             if (tanque.photonView.IsMine)
             {
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            FindFirstObjectByType<LobbyUIManager>().MostrarResultados();
+            FindFirstObjectByType<MenuManager>().MostrarResultados();
         }
     }
 

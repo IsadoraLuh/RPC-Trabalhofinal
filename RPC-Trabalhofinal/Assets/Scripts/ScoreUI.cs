@@ -3,11 +3,13 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreUI : MonoBehaviourPunCallbacks
 {
     //Referência da UI de texto de pontuação
-    public Text textPontuacao;
+    public TextMeshPro
+        textPontuacao;
 
     //Número do "Actor" do Photon PUN para ter a referência de quem pertence esta UI
     public int actorNumber;
