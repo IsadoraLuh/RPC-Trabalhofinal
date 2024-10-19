@@ -3,98 +3,119 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
-
+using System.Linq;
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public TextMeshProUGUI timerText; // Referência para o texto do timer
-    public GameObject scorePanel; // Referência para o painel que conterá os scores
-    public GameObject scoreEntryPrefab; // Prefab para a entrada de placar
-    public int matchDuration = 120; // Duração de 2 minutos (120 segundos)
-    private float timer;
+    //Referência as localizações que cada jogador começa
+    public List<GameObject> localizacoesSpawn;
 
-    private Dictionary<int, int> playerScores = new Dictionary<int, int>();
+    //Referência ao texto de UI que tem o cronômetro
+    public Text textTimer;
+
+    //Tempo de partida em segundos
+    public float tempoDePartida = 120f;
+    private float tempoDePartidaAtual = 0f;
+
+    //Boolean informando se o jogo finalizou
+    public bool ehGameOver = false;
 
     void Start()
     {
-        timer = matchDuration;
-        UpdateScoreUI();
-
-
+        //Inicia como falso, pois antes de iniciar a partida, o contador não deve aparecer
+        textTimer.gameObject.SetActive(false);
     }
 
-    void Update()
+    //Método responsável por iniciar a partida
+    public void IniciarPartida()
     {
-        if (PhotonNetwork.IsMasterClient) // Somente o MasterClient controla o temporizador
-        {
-            timer -= Time.deltaTime;
-            photonView.RPC("UpdateTimer", RpcTarget.All, timer);
+        ehGameOver = false;
+        FindObjectOfType<PontuacaoManager>().ResetarPontuacao(PhotonNetwork.LocalPlayer);
 
-            if (timer <= 0)
+        //Faz o cronometro aparecer
+        tempoDePartidaAtual = tempoDePartida;
+
+        textTimer.gameObject.SetActive(true);
+        AtualizarTimerUI();
+
+        //Inicia uma co-rotina que executa a cada 1 segundo para atualizar o tempo do cronometro
+        StartCoroutine(TimerCoroutine());
+
+        //Obtém o índice do jogador para saber onde o tanque deve nascer
+        //var indiceJogador = (PhotonNetwork.LocalPlayer.ActorNumber -1) % localizacoesSpawn.Count;
+        //var go = localizacoesSpawn[indiceJogador];
+        var go = ObterLocalizacaoSpawn(PhotonNetwork.LocalPlayer);
+
+        //Cria o tanque no local onde ele deve ser criado
+        var tanque = PhotonNetwork.Instantiate("TanquePrefab", go.transform.position, go.transform.rotation);
+    }
+
+    public GameObject ObterLocalizacaoSpawn(Player player)
+    {
+        var indice = (player.ActorNumber - 1) % localizacoesSpawn.Count;
+        return localizacoesSpawn[indice];
+    }
+
+    //Co-rotina responsável por contar e atualizar em tela o cronômetro
+    private IEnumerator TimerCoroutine()
+    {
+        //Enquanto o tempo da partida não acabou e o jogo não finalizou, aguarda 1 segundo e atualiza a interface
+        while (tempoDePartidaAtual > 0 && !ehGameOver)
+        {
+            //Aguarda 1 segundo
+            yield return new WaitForSeconds(1f);
+
+            //Diminui o tempo em 1 segundo
+            tempoDePartidaAtual -= 1f;
+
+            //Atualiza o tempo
+            AtualizarTimerUI();
+        }
+
+        //Se o tempo acabou e o jogo ainda não finalizou, finaliza
+        if (tempoDePartidaAtual <= 0 && !ehGameOver)
+        {
+            //Se for o host, efetua o término de partida
+            if (PhotonNetwork.IsMasterClient)
             {
-                EndGame();
+                //Efetua o processo de finalização do jogo, avisando todos no RPC que a partida finalizou
+                photonView.RPC("TerminarJogo", RpcTarget.All);
             }
+
+            //Para o contador de tempo
+            StopCoroutine(TimerCoroutine());
         }
     }
 
+    //Método responsável por finalizar o jogo
     [PunRPC]
-    void UpdateTimer(float time)
+    public void TerminarJogo()
     {
-        timerText.text = "Time: " + Mathf.Ceil(time).ToString(); // Atualiza o texto do timer
-    }
+        //Marca o jogo como finalizado
+        ehGameOver = true;
 
-    public void AddScore(int playerID)
-    {
-        if (playerScores.ContainsKey(playerID))
+        FindObjectsByType<TanqueController>(FindObjectsSortMode.None).ToList().ForEach(tanque =>
         {
-            playerScores[playerID]++;
-        }
-        else
-        {
-            playerScores[playerID] = 1; // Adiciona novo jogador
-        }
-        UpdateScoreUI();
-    }
+            if (tanque.photonView.IsMine)
+            {
+                //Destrói o tanque
+                PhotonNetwork.Destroy(tanque.gameObject);
+            }
+        });
 
-    void UpdateScoreUI()
-    {
-        // Limpa o painel de placar antes de atualizar
-        foreach (Transform child in scorePanel.transform)
+        if (PhotonNetwork.IsMasterClient)
         {
-            Destroy(child.gameObject);
-        }
-
-        // Atualiza o placar para cada jogador
-        foreach (var player in playerScores)
-        {
-            GameObject scoreEntry = Instantiate(scoreEntryPrefab, scorePanel.transform);
-            scoreEntry.GetComponent<Text>().text = $"Player {player.Key}: {player.Value}"; // Exibe a pontuação
+            FindFirstObjectByType<LobbyUIManager>().MostrarResultados();
         }
     }
 
-    void EndGame()
-
+    //Método responsável por atualizar o tempo
+    void AtualizarTimerUI()
     {
-        scorePanel.SetActive(true);
-        string resultMessage = "Game Over!";
-
-        photonView.RPC("ShowEndGameMessage", RpcTarget.All, resultMessage);
-        // Espera alguns segundos antes de voltar para o lobby
-        StartCoroutine(ReturnToLobbyAfterDelay(5)); // Aguarda 5 segundos
-    }
-
-    private IEnumerator ReturnToLobbyAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        PhotonNetwork.LoadLevel("LobbyScene"); // Retorna para o lobby
-    }
-
-    [PunRPC]
-    void ShowEndGameMessage(string message)
-    {
-        // Mostrar mensagem na tela com o resultado (pode usar UI para isso)
-        Debug.Log(message);
-        // Aqui você pode mostrar a mensagem em um painel ou texto UI
+        int minutos = Mathf.FloorToInt(tempoDePartidaAtual / 60);
+        int segundos = Mathf.FloorToInt(tempoDePartidaAtual % 60);
+        textTimer.text = string.Format("{0:00}:{1:00}", minutos, segundos);
     }
 }
