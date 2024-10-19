@@ -1,96 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
+using UnityEngine;
 
-public class Tank : MonoBehaviourPunCallbacks, IMovable
+public class TanK : MonoBehaviourPun, IDamageable
 {
-    Rigidbody2D rb;
-    public float rotationSpeed = 5;
-    public float moveSpeed = 0.09f;
-    public GameObject tankShellPrefab;
-    public Transform spawnLocation;
-    public int health = 5;
-    public float shootCooldown = 2f;
-    private float shootTime = 0;
+    //Velocidade de rotação do tanque
+    public float _velocidadeRotacao = 100f;
+
+    //Velocidade de movimento do tanque
+    public float _velocidadeMovimento = 5f;
+
+    private Rigidbody2D rb;
+    private GameManager gm;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-       //if (photonView.IsMine)
-      // {
-          // Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-       // }
+        gm = FindFirstObjectByType<GameManager>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        if (!photonView.IsMine) return;
-
-        Vector2 moveDirection = new Vector2(0, Input.GetAxisRaw("Vertical"));
-        Move(moveDirection);
-
-        if (Input.GetButtonDown("Fire1") && Time.time > shootTime)
+        if (gm.ehGameOver)
         {
-            photonView.RPC("Shoot", RpcTarget.All);
-            shootTime = Time.time + shootCooldown;
-            Debug.Log("Tiroo");
+            return;
         }
 
-        float rotationAmount = -Input.GetAxisRaw("Horizontal") * rotationSpeed;
-        Rotate(rotationAmount);
+        //Verifica se "sou eu"
+        if (photonView.IsMine)
+        {
+            //Obtém o comando de girar o tanque (A ou D)
+            float moverHorizonalmente = Input.GetAxis("Horizontal");
+
+            //Obtém o comando de mover o tanque (W ou S)
+            float moverVerticalmente = Input.GetAxis("Vertical");
+
+            MoverTanque(moverHorizonalmente, moverVerticalmente);
+        }
     }
 
-    private void FixedUpdate()
+    void MoverTanque(float moverHorizonalmente, float moverVerticalmente)
     {
-        if (!photonView.IsMine) return;
+        // Movimento do tanque (Move o tanque na direção em que ele está apontado)
+        Vector2 movimento = transform.right * moverVerticalmente * _velocidadeMovimento * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + movimento);
 
-        rb.MovePosition(rb.position + (Vector2)transform.up * moveSpeed);
+        // Rotaciona o tanque (A ou D) - move no eixo Z para 2D
+        float rotacao = -moverHorizonalmente * _velocidadeRotacao * Time.fixedDeltaTime;
+        rb.MoveRotation(rb.rotation + rotacao);
     }
 
+    //Método herdado da interface que trata o recebimento de dano
+  
+    //Método responsável por resetar a posição
     [PunRPC]
-    public void Shoot()
+    public void ResetarPosicaoNoSpawn()
     {
-        Instantiate(tankShellPrefab, spawnLocation.position, spawnLocation.rotation);
+        //Obtém a posição com base no player
+        var localizacaoSpawn1 = FindFirstObjectByType<GameManager>().ObterLocalizacaoSpawn(photonView.Owner);
+
+        //Seta ao tanque, a posição do respawn
+        transform.position = localizacaoSpawn1.transform.position;
+
+        //Seta ao tanque, a rotação do respawn
+        transform.rotation = localizacaoSpawn1.transform.rotation;
+    }
+    public void TakeDamage()
+    {
+        //No caso deste jogo, ao receber um dano, o tanque é teleportado para a área de respawn
+        //Por este motivo, envia uma mensagem ao dono deste tanque para que ele resete a posição pois só ele pode fazer isso
+        photonView.RPC("ResetarPosicaoNoSpawn", photonView.Owner);
     }
 
-   /* public void TakeDamage(float amount)
-    {
-        health -= (int)amount;
-        if (health <= 0) 
-        {
-            photonView.RPC("Respawn", RpcTarget.All);
-        }
-    }
-
-   s [PunRPC]
-    private void Respawn()
-    {
-        // Código para respawn em posição aleatória do mapa
-        Vector2 respawnPosition = PlayerManager.Instance.spawnPoints[Random.Range(0, PlayerManager.Instance.spawnPoints.Length)].position;
-    transform.position = respawnPosition;
-    health = 100;
-    }
-   */
-    public void Move(Vector2 direction)
-    {
-        rb.MovePosition(rb.position + (Vector2)transform.up * moveSpeed);
-    }
-
-    public void Rotate(float amount)
-    {
-        rb.MoveRotation(rb.rotation + amount);
-    }
-
-    [PunRPC]
-    private void Initialize()
-    {
-        if (!photonView.IsMine)
-        {
-            Color color = Color.white;
-            color.a = 0.1f;
-            GetComponent<SpriteRenderer>().color = color;
-        }
-    }
 }
