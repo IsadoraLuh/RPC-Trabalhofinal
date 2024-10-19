@@ -8,8 +8,7 @@ using TMPro;
 public class ScoreUI : MonoBehaviourPunCallbacks
 {
     //Referência da UI de texto de pontuação
-    public TextMeshPro
-        textPontuacao;
+    public TextMeshPro textPontuacao;
 
     //Número do "Actor" do Photon PUN para ter a referência de quem pertence esta UI
     public int actorNumber;
