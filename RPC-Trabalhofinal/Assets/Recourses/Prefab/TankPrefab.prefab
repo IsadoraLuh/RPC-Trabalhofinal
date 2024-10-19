@@ -11,20 +11,13 @@ GameObject:
   - component: {fileID: 1614768868789991846}
   - component: {fileID: 1614768868789991847}
   - component: {fileID: 1614768868789991844}
-<<<<<<< HEAD
-  - component: {fileID: 5893672952239871613}
-  - component: {fileID: 9051933049871064988}
-  - component: {fileID: 6930108360581270308}
-  - component: {fileID: 1501158254998289079}
-=======
-  - component: {fileID: 7531553286940649027}
-  - component: {fileID: 7482051734625784690}
-  - component: {fileID: 7190700742524218353}
-  - component: {fileID: 2499178793781120243}
-  - component: {fileID: 1670789811603937306}
->>>>>>> GameManager
+  - component: {fileID: 3881116250347859569}
+  - component: {fileID: 290612258694936571}
+  - component: {fileID: 1097449750282674665}
+  - component: {fileID: 2098244634570191805}
+  - component: {fileID: 6761717216802563079}
   m_Layer: 0
-  m_Name: TanquePrefab
+  m_Name: TankPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1614768870270142969}
-  - {fileID: 4385692016492175463}
+  - {fileID: 2509674840806900587}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1614768868789991847
@@ -120,11 +113,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
-<<<<<<< HEAD
---- !u!61 &5893672952239871613
-=======
---- !u!61 &7531553286940649027
->>>>>>> GameManager
+--- !u!50 &3881116250347859569
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614768868789991845}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &290612258694936571
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,11 +185,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.26, y: 1.04}
   m_EdgeRadius: 0
-<<<<<<< HEAD
---- !u!114 &9051933049871064988
-=======
---- !u!114 &7482051734625784690
->>>>>>> GameManager
+--- !u!114 &1097449750282674665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,10 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _velocidadeRotacao: 100
   _velocidadeMovimento: 5
-<<<<<<< HEAD
---- !u!114 &6930108360581270308
-=======
---- !u!114 &7190700742524218353
+--- !u!114 &2098244634570191805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,12 +218,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2499178793781120243}
+  - {fileID: 6761717216802563079}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2499178793781120243
->>>>>>> GameManager
+--- !u!114 &6761717216802563079
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,37 +238,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
-<<<<<<< HEAD
---- !u!50 &1501158254998289079
-=======
---- !u!50 &1670789811603937306
->>>>>>> GameManager
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614768868789991845}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1614768870270142967
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,11 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1614768870270142969}
   - component: {fileID: 1614768870270142966}
-<<<<<<< HEAD
-  - component: {fileID: 6800910180866679636}
-=======
-  - component: {fileID: 2048876823439480580}
->>>>>>> GameManager
+  - component: {fileID: 6420048382587467211}
   m_Layer: 0
   m_Name: Canhao
   m_TagString: Untagged
@@ -295,8 +268,7 @@ Transform:
   m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 828468584437958686}
+  m_Children: []
   m_Father: {fileID: 1614768868789991846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1614768870270142966
@@ -351,11 +323,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
---- !u!114 &6800910180866679636
-=======
---- !u!114 &2048876823439480580
->>>>>>> GameManager
+--- !u!114 &6420048382587467211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,17 +335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e493efbe084e9ed469c4d66df9a163ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  LocalizacaoSaidaBala: {fileID: 4385692016492175463}
+  LocalizacaoSaidaBala: {fileID: 2509674840806900587}
   _frequenciaBala: 1
   _frequenciaBalaAtual: 0
---- !u!1 &4263942409625523118
-=======
-  LocalizacaoSaidaBala: {fileID: 828468584437958686}
-  _frequenciaBala: 1
-  _frequenciaBalaAtual: 0
---- !u!1 &8111630514096002378
->>>>>>> GameManager
+--- !u!1 &5254576536926631720
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -385,47 +346,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 4385692016492175463}
+  - component: {fileID: 2509674840806900587}
   m_Layer: 0
   m_Name: LocalizacaoBala
-=======
-  - component: {fileID: 828468584437958686}
-  m_Layer: 0
-  m_Name: Localizacao da bala
->>>>>>> GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
---- !u!4 &4385692016492175463
-=======
---- !u!4 &828468584437958686
->>>>>>> GameManager
+--- !u!4 &2509674840806900587
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 4263942409625523118}
+  m_GameObject: {fileID: 5254576536926631720}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.255, y: -0.034, z: -0.01943065}
+  m_LocalPosition: {x: 1.17, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1614768868789991846}
-=======
-  m_GameObject: {fileID: 8111630514096002378}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.835, y: -0.018, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1614768870270142969}
->>>>>>> GameManager
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -12,7 +12,15 @@ public class MenuManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI nicknameUI, roomNameUI, playerList;
     [SerializeField] Button joinButton, createButton, leaveButton, startButton;
     [SerializeField] GameObject menu, lobby;
-   
+    //Referência ao botão de iniciar partida
+    public Button buttonIniciarPartida;
+
+    //Referência ao botão de recomeçar a partida
+    public Button buttonRecomecarPartida;
+
+    //Referência ao texto da UI de status
+    public Text textStatus;
+
     // Declara uma instância estática da classe MenuManager
     public static MenuManager instance;
 
@@ -107,5 +115,5 @@ public class MenuManager : MonoBehaviour
 
    
 
-   
+  
 }
