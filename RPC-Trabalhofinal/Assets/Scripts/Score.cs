@@ -5,9 +5,7 @@ using Photon.Realtime;
 
 public class Score : MonoBehaviourPunCallbacks
 {
-
-    // Adiciona a pontuação ao jogador
-    public void AddScore(Player player)
+    public void AddScore(Player player)// Adicionar a pontuação ao jogador
     {
         //Inicializa a pontuação como zero e obtem a pontuação do jogador
         int pontuacaoAtual = 0;

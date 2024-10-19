@@ -57,7 +57,7 @@ public class TankShell : MonoBehaviourPun
                 if (photonView.IsMine)
                 {
                     //Adiciona a pontuação para o jogador atual
-                    FindObjectOfType<Score>().AdicionarPontuacao(PhotonNetwork.LocalPlayer);
+                    FindObjectOfType<Score>().AddScore(PhotonNetwork.LocalPlayer);
                 }
             }
 

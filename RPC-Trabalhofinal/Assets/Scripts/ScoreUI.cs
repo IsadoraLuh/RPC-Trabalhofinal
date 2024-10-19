@@ -5,7 +5,8 @@ using System.Linq;
 using UnityEngine.UI;
 
 public class ScoreUI : MonoBehaviourPunCallbacks
-{//Referência da UI de texto de pontuação
+{
+    //Referência da UI de texto de pontuação
     public Text textPontuacao;
 
     //Número do "Actor" do Photon PUN para ter a referência de quem pertence esta UI
@@ -25,3 +26,4 @@ public class ScoreUI : MonoBehaviourPunCallbacks
         }
     }
 }
+
