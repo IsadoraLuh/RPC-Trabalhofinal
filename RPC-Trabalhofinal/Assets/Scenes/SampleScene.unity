@@ -5517,11 +5517,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 45
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 45
+    m_MinSize: 5
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -5969,12 +5969,12 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 2103620932}
   - {fileID: 1172834439}
+  - {fileID: 751369336}
+  - {fileID: 970037662}
+  - {fileID: 930896030}
   - {fileID: 1565482311}
   - {fileID: 2115067844}
   - {fileID: 720647815}
   - {fileID: 1896540043}
   - {fileID: 1970730960}
   - {fileID: 993215344}
-  - {fileID: 751369336}
-  - {fileID: 970037662}
-  - {fileID: 930896030}
