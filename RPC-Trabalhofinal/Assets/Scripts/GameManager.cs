@@ -19,7 +19,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        photonView.RPC("StartGameforAll", RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+
+        {
+            photonView.RPC("StartGameforAll", RpcTarget.All);
+        }
+        
+            
     }
 
     public void StartGame() // vai ta iniciando a partida
@@ -95,7 +101,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartGameforAll()
     {
-        StartGame();
+        if (!isGameOver && PhotonNetwork.IsMasterClient)
+        {
+            StartGame();
+        }
+           
     }
 
  
