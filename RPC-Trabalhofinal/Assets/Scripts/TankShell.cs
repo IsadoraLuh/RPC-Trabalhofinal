@@ -19,10 +19,8 @@ public class TankShell : MonoBehaviourPun
     public void Inicializar(GameObject atirador)//  //Inicializa a bala informando quem disparou ela
     {
         this.atirador = atirador;
-        shooterActorNumber = atirador.GetComponent<PhotonView>().Owner.ActorNumber;// armazena o ator que atirou
+        //shooterActorNumber = atirador.GetComponent<PhotonView>().Owner.ActorNumber;// armazena o ator que atirou
     }
-
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector3.right * velocidade * Time.deltaTime);///movimentar a bala

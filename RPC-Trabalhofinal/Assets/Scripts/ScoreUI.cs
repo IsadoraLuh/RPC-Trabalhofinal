@@ -9,7 +9,7 @@ using System.Diagnostics;
 public class ScoreUI : MonoBehaviourPunCallbacks
 {
     public Text textScore;//texto de pontuacao
-    public int actorNumber;//Número do "Actor" do Photon PUN para ter a referência de quem pertence esse UI
+    public int actorNumber;//Número do "Actor" do Photon PUN para conseguir a referência de quem pertence esse UI
 
     //Método executado automaticamente pelo PhotonPun quando é identificado que algum jogador teve uma propriedade alterada
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

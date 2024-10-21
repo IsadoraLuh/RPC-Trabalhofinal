@@ -33,14 +33,21 @@ public class TanK : MonoBehaviourPun, IDamageable
 
     void Move(float moverHorizonalmente, float moverVerticalmente)
     {
-        Vector2 movimento = transform.right * moverVerticalmente * _velocidadeMovimento * Time.fixedDeltaTime; // Movimento do tanque
-
+        Vector2 moviment = transform.right * moverVerticalmente * _velocidadeMovimento * Time.fixedDeltaTime; // Movimento do tanque
+        Vector2 novaPosicao = rb.position + moviment;
+        float limiteEsquerdo = -400f;
+        float limiteDireito = 400f;
+        float limiteInferior = -300f;
+        float limiteSuperior = 300f;
+        // Verifica se a nova posição está dentro dos limites
+        novaPosicao.x = Mathf.Clamp(novaPosicao.x, limiteEsquerdo, limiteDireito);
+        novaPosicao.y = Mathf.Clamp(novaPosicao.y, limiteInferior, limiteSuperior);
         // Verifica colisão com outros tanques
-        RaycastHit2D hit = Physics2D.Raycast(rb.position, transform.right, movimento.magnitude);
-        rb.MovePosition(rb.position + movimento);
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, transform.right, moviment.magnitude);
+        rb.MovePosition(rb.position + moviment);
         if (hit.collider == null) // Se não colidir com nada
         {
-            rb.MovePosition(rb.position + movimento); // Mover o tanque
+            rb.MovePosition(rb.position + moviment); // Mover o tanque
         }
         else
         {

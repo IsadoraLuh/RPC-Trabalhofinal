@@ -12,7 +12,6 @@ public class TankCannon : MonoBehaviourPun, IShootable
 
     public void Shoot()
     {
-        
         _frequenciaShellAtual = 0f;// vai ta resetando a frequência para 0, ja que o tanque precisa recarregar 
         var shell = PhotonNetwork.Instantiate("BalaPrefab", LocalizacaoSaidaShell.transform.position, LocalizacaoSaidaShell.transform.rotation);// se a bala e instancia entre rede
         shell.GetComponent<TankShell>().Inicializar(GetComponentInParent<TanK>().gameObject);
