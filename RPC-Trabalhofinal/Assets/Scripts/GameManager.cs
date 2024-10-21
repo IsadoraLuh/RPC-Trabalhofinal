@@ -15,9 +15,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float tempoDePartida = 120f;
     private float tempoDePartidaAtual = 0f;
     public bool ehGameOver = false;//Boolean informando se o jogo finalizou
-  
-   
 
+
+    private void Start()
+    {
+        photonView.RPC("StartGameforAl", RpcTarget.All);
+    }
 
     public void StartGame() // vai ta iniciando a partida
     {
@@ -30,7 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         textTimer.gameObject.SetActive(true);
         UptadeTimerUI();
 
-        photonView.RPC("StartGameforAll", RpcTarget.All);
 
 
         StartCoroutine(TimerCoroutine());// co-rotina para atualizar o tempo do cronometro
@@ -88,11 +90,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         
     }
 
-
     [PunRPC]
     public void StartGameforAll()
     {
-                var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();// vcai ta procurando o objeto pta iniciar a partida
+        var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();// vcai ta procurando o objeto pta iniciar a partida
         gameManager.StartGame();
     }
 
