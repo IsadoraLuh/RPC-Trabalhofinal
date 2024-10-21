@@ -420,7 +420,7 @@ Transform:
   m_GameObject: {fileID: 161877753}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.65, y: -6.3, z: -1.2293423}
+  m_LocalPosition: {x: -8.669, y: -6.3, z: -1.2293423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6085,7 +6085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07346683, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.041900635, y: 0}
+  m_AnchoredPosition: {x: -5.1, y: 0}
   m_SizeDelta: {x: 0.083801, y: 0.00000023842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1889129331
@@ -6201,7 +6201,7 @@ Transform:
   m_GameObject: {fileID: 1896540041}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.70773345, w: 0.70647967}
-  m_LocalPosition: {x: 3.12, y: 8.05, z: -0.02224968}
+  m_LocalPosition: {x: 3.12, y: 7.89, z: -0.02224968}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6255,7 +6255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textScore: {fileID: 432717467}
-  actorNumber: 0
+  actorNumber: 1
 --- !u!212 &1970730962
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6362,10 +6362,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 119233364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.123}
-  m_AnchorMin: {x: 0.38700002, y: 0.8183704}
-  m_AnchorMax: {x: 0.5782084, y: 0.9378519}
-  m_AnchoredPosition: {x: 2.0113983, y: 2.8727112}
-  m_SizeDelta: {x: -5.9521, y: -7.8165}
+  m_AnchorMin: {x: 0.39200002, y: 0.8283334}
+  m_AnchorMax: {x: 0.5782084, y: 0.9345186}
+  m_AnchoredPosition: {x: 0.011398315, y: 0.8727112}
+  m_SizeDelta: {x: -1.9520998, y: 0.18349981}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2027185671
 MonoBehaviour:

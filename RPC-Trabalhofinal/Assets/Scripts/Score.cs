@@ -14,8 +14,7 @@ public class Score : MonoBehaviourPunCallbacks
             scoreAtual = (int)player.CustomProperties["Pontuacao"];
         }
 
-        //Adiciona a pontuação em 1
-        scoreAtual += 1;
+        scoreAtual += 1; //Adiciona a pontuação em 1
 
         //Atualiza a pontuação no PhotonPun e notifica todos jogadores,ai Photon Pun executará o método OnPlayerPropertiesUpdate da classe PontuacaoUIController
         Hashtable propriedadePontuacao = new Hashtable();
@@ -23,11 +22,11 @@ public class Score : MonoBehaviourPunCallbacks
         player.SetCustomProperties(propriedadePontuacao);
     }
     
-    public void ResetarScore(Player player)// Adicionar a pontuação ao jogador
+    public void ResetarScore(Player player)// reseta pontuação ao jogador
     {
         
         Hashtable propriedadePontuacao = new Hashtable();////Atualiza a pontuação no PhotonPun e notifica todos jogadores
-        propriedadePontuacao["Pontuacao"] = 0;
+        propriedadePontuacao["Pontuacao"] = 0;// reseta a pontuacao
         player.SetCustomProperties(propriedadePontuacao);
     }
 }
