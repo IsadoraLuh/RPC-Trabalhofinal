@@ -20,7 +20,6 @@ public class TanK : MonoBehaviourPun, IDamageable
         gm = FindFirstObjectByType<GameManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (gm.ehGameOver)
@@ -37,14 +36,14 @@ public class TanK : MonoBehaviourPun, IDamageable
             //Obtém o comando de mover o tanque (W ou S)
             float moverVerticalmente = Input.GetAxis("Vertical");
 
-            MoverTanque(moverHorizonalmente, moverVerticalmente);
+            Move(moverHorizonalmente, moverVerticalmente);
         }
     }
 
-    void MoverTanque(float moverHorizonalmente, float moverVerticalmente)
+    void Move(float moverHorizonalmente, float moverVerticalmente)
     {
-        // Movimento do tanque (Move o tanque na direção em que ele está apontado)
-        Vector2 movimento = transform.right * moverVerticalmente * _velocidadeMovimento * Time.fixedDeltaTime;
+    
+        Vector2 movimento = transform.right * moverVerticalmente * _velocidadeMovimento * Time.fixedDeltaTime;// Movimento do tanque
         rb.MovePosition(rb.position + movimento);
 
         // Rotaciona o tanque (A ou D) - move no eixo Z para 2D
@@ -52,14 +51,13 @@ public class TanK : MonoBehaviourPun, IDamageable
         rb.MoveRotation(rb.rotation + rotacao);
     }
 
-    //Método herdado da interface que trata o recebimento de dano
-  
-    //Método responsável por resetar a posição
+    
+ 
     [PunRPC]
-    public void ResetarPosicaoNoSpawn()
+    public void ResetarPosicaoNoSpawn()//responsável por resetar a posição
     {
         //Obtém a posição com base no player
-        var localizacaoSpawn1 = FindFirstObjectByType<GameManager>().ObterLocalizacaoSpawn(photonView.Owner);
+        var localizacaoSpawn1 = FindFirstObjectByType<GameManager>().SpawnLocalization(photonView.Owner);
 
         //Seta ao tanque, a posição do respawn
         transform.position = localizacaoSpawn1.transform.position;
@@ -67,11 +65,9 @@ public class TanK : MonoBehaviourPun, IDamageable
         //Seta ao tanque, a rotação do respawn
         transform.rotation = localizacaoSpawn1.transform.rotation;
     }
-    public void TakeDamage()
+    public void TakeDamage() // metodo para receber dano
     {
-        //No caso deste jogo, ao receber um dano, o tanque é teleportado para a área de respawn
-        //Por este motivo, envia uma mensagem ao dono deste tanque para que ele resete a posição pois só ele pode fazer isso
-        photonView.RPC("ResetarPosicaoNoSpawn", photonView.Owner);
+        photonView.RPC("ResetarPosicaoNoSpawn", photonView.Owner);//ao receber um dano, o tanque é teleportado para a área de respawn
     }
 
 }

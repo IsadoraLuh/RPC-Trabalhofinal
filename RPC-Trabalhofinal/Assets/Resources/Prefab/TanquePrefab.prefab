@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
   m_UseLocal: 1
 --- !u!1 &1614768870270142967
 GameObject:
@@ -335,9 +335,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e493efbe084e9ed469c4d66df9a163ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalizacaoSaidaBala: {fileID: 2509674840806900587}
-  _frequenciaBala: 1
-  _frequenciaBalaAtual: 0
+  LocalizacaoSaidaShell: {fileID: 0}
+  _frequenciaShell: 1
+  _frequenciaShellAtual: 0
 --- !u!1 &5254576536926631720
 GameObject:
   m_ObjectHideFlags: 0

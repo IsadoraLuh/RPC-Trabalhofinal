@@ -9,107 +9,95 @@ using TMPro;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    //Referência as localizações que cada jogador começa
-    public List<GameObject> localizacoesSpawn;
-
-    //Referência ao texto de UI que tem o cronômetro
-    public Text textTimer;
-
-    //Tempo de partida em segundos
+    
+    public List<GameObject> localizacoesSpawn;//Referência as localizações que cada jogador começa
+    public Text textTimer;// texto do cronometro
     public float tempoDePartida = 120f;
     private float tempoDePartidaAtual = 0f;
+    public bool ehGameOver = false;//Boolean informando se o jogo finalizou
+  
+   
 
-    //Boolean informando se o jogo finalizou
-    public bool ehGameOver = false;
 
-    void Start()
-    {
-        //Inicia como falso, pois antes de iniciar a partida, o contador não deve aparecer
-        textTimer.gameObject.SetActive(false);
-    }
-
-    //Método responsável por iniciar a partida
-    public void IniciarPartida()
+    public void StartGame() // vai ta iniciando a partida
     {
         ehGameOver = false;
-        FindObjectOfType<Score>().ResetarPontuacao(PhotonNetwork.LocalPlayer);
+        FindObjectOfType<Score>().ResetarScore(PhotonNetwork.LocalPlayer);
 
         //Faz o cronometro aparecer
         tempoDePartidaAtual = tempoDePartida;
 
         textTimer.gameObject.SetActive(true);
-        AtualizarTimerUI();
+        UptadeTimerUI();
 
-        //Inicia uma co-rotina que executa a cada 1 segundo para atualizar o tempo do cronometro
-        StartCoroutine(TimerCoroutine());
+        photonView.RPC("StartGameforAll", RpcTarget.All);
 
-        //Obtém o índice do jogador para saber onde o tanque deve nascer
-        //var indiceJogador = (PhotonNetwork.LocalPlayer.ActorNumber -1) % localizacoesSpawn.Count;
-        //var go = localizacoesSpawn[indiceJogador];
-        var go = ObterLocalizacaoSpawn(PhotonNetwork.LocalPlayer);
 
-        //Cria o tanque no local onde ele deve ser criado
-        var tanque = PhotonNetwork.Instantiate("TanquePrefab", go.transform.position, go.transform.rotation);
+        StartCoroutine(TimerCoroutine());// co-rotina para atualizar o tempo do cronometro
+
+        var indiceJogador = (PhotonNetwork.LocalPlayer.ActorNumber -1) % localizacoesSpawn.Count; // ver o indece para saber onde o tank deve nascer
+        var go = SpawnLocalization(PhotonNetwork.LocalPlayer);        //var go = localizacoesSpawn[indiceJogador];
+        var tanque = PhotonNetwork.Instantiate("TanquePrefab", go.transform.position, go.transform.rotation);// vai ta criando o tank onde deve nascer assim
     }
 
-    public GameObject ObterLocalizacaoSpawn(Player player)
+    public GameObject SpawnLocalization(Player player)
     {
         var indice = (player.ActorNumber - 1) % localizacoesSpawn.Count;
         return localizacoesSpawn[indice];
     }
 
-    //Co-rotina responsável por contar e atualizar em tela o cronômetro
-    private IEnumerator TimerCoroutine()
+    private IEnumerator TimerCoroutine() // vai ta sendo responsável por contar e atualizar em tela o cronômetro
     {
-        //Enquanto o tempo da partida não acabou e o jogo não finalizou, aguarda 1 segundo e atualiza a interface
-        while (tempoDePartidaAtual > 0 && !ehGameOver)
+
+        while (tempoDePartidaAtual > 0 && !ehGameOver)// vai ta aguardando 1 segundo para e atualiznso a interface
         {
-            //Aguarda 1 segundo
             yield return new WaitForSeconds(1f);
-
-            //Diminui o tempo em 1 segundo
-            tempoDePartidaAtual -= 1f;
-
-            //Atualiza o tempo
-            AtualizarTimerUI();
+            tempoDePartidaAtual -= 1f;// //Diminui o tempo em 1 segundo
+            UptadeTimerUI();////Atualizar o tempo
         }
 
-        //Se o tempo acabou e o jogo ainda não finalizou, finaliza
-        if (tempoDePartidaAtual <= 0 && !ehGameOver)
+   
+        if (tempoDePartidaAtual <= 0 && !ehGameOver)// finaliza o jogo se o tempo acabou
         {
-            //Se for o host, efetua o término de partida
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient) // so host efetua o termino na partida
             {
-                //Efetua o processo de finalização do jogo, avisando todos no RPC que a partida finalizou
-                photonView.RPC("TerminarJogo", RpcTarget.All);
+                photonView.RPC("EndGame", RpcTarget.All);//avisando todos no RPC que a partida finalizou
             }
 
-            //Para o contador de tempo
-            StopCoroutine(TimerCoroutine());
+            StopCoroutine(TimerCoroutine());// vai ta parandoo o contador de tempo
         }
     }
 
-    //Método responsável por finalizar o jogo
+  
     [PunRPC]
-    public void TerminarJogo()
+    public void EndGame() // vai ta sendo responsavel por finalizar o jogo
     {
-        //Marca o jogo como finalizado
-        ehGameOver = true;
+        
+        ehGameOver = true;//Marcar o jogo como finalizado
 
-        FindObjectsByType<TanK>(FindObjectsSortMode.None).ToList().ForEach(tanque =>
+        FindObjectsByType<TanK>(FindObjectsSortMode.None).ToList().ForEach(tank =>
         {
-            if (tanque.photonView.IsMine)
+            if (tank.photonView.IsMine)
             {
-                //Destrói o tanque
-                PhotonNetwork.Destroy(tanque.gameObject);
+  
+                PhotonNetwork.Destroy(tank.gameObject);// para destruir o tank
             }
-        });
+        }
+        );
 
         
     }
 
-    //Método responsável por atualizar o tempo
-    void AtualizarTimerUI()
+
+    [PunRPC]
+    public void StartGameforAll()
+    {
+                var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();// vcai ta procurando o objeto pta iniciar a partida
+        gameManager.StartGame();
+    }
+
+ 
+    void UptadeTimerUI() // atualiza o tempo
     {
         int minutos = Mathf.FloorToInt(tempoDePartidaAtual / 60);
         int segundos = Mathf.FloorToInt(tempoDePartidaAtual % 60);

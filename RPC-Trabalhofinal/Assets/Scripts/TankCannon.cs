@@ -6,36 +6,29 @@ using UnityEngine;
 
 public class TankCannon : MonoBehaviourPun, IShootable
 {
-    // Localização de onde vai sair a bala
-    public Transform LocalizacaoSaidaBala;
-
-    // Frequência que o tanque pode atirar uma bala de canhão, é o tempo que ele leva para carregar.
-    public float _frequenciaBala = 1f;
-    public float _frequenciaBalaAtual = 0f;
+    public Transform LocalizacaoSaidaShell;// pra ver onde vai ta saindo a bala
+    public float _frequenciaShell = 1f;//so vai ta conseguindo atirar se ele carregou
+    public float _frequenciaShellAtual = 0f;
 
     public void Shoot()
     {
-        // Reseta a frequência para 0, pois o tanque precisa recarregar a bala de canhão para o próximo tiro
-        _frequenciaBalaAtual = 0f;
-
-        //Dispara a bala e instância entre a rede
-        var bala = PhotonNetwork.Instantiate("BalaPrefab", LocalizacaoSaidaBala.transform.position, LocalizacaoSaidaBala.transform.rotation);
+        
+        _frequenciaShellAtual = 0f;// vai ta resetando a frequência para 0, ja que o tanque precisa recarregar 
+        var bala = PhotonNetwork.Instantiate("BalaPrefab", LocalizacaoSaidaShell.transform.position, LocalizacaoSaidaShell.transform.rotation);// se a bala e instancia entre rede
         bala.GetComponent<TankShell>().Inicializar(GetComponentInParent<TanK>().gameObject);
     }
 
     void Update()
     {
-        // Contabiliza a frequência da bala, pois o tanque está carregando a bala de canhão
-        _frequenciaBalaAtual += Time.deltaTime;
+        _frequenciaShellAtual += Time.deltaTime;// contabilizando a frequencia da bala
 
-        //Verifica se "sou eu" atirando
+  
         if (photonView.IsMine)
         {
-            //Verifica se o botão de espaço do teclado foi apertado e se o tanque já está carregado para atirar
-            if (Input.GetKeyDown(KeyCode.Space) && _frequenciaBalaAtual > _frequenciaBala)
+          
+            if (Input.GetKeyDown(KeyCode.Space) && _frequenciaShellAtual > _frequenciaShell)//se o botão de espaço do teclado foi apertado e se o tanque já está carregado para atirar
             {
-                //Executa o método de atirar a bala de canhão
-                Shoot();
+                Shoot();// executat o metodo de atirar a bala
             }
         }
     }

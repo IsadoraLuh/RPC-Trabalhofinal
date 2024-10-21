@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
-
-// Define a classe MenuManager que herda de MonoBehaviour, permitindo que seja usada como um componente em GameObjects.
 public class MenuManager : MonoBehaviour
 {
     // Define variáveis privadas que podem ser configuradas no Inspector do Unity.
@@ -12,14 +10,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI nicknameUI, roomNameUI, playerList;
     [SerializeField] Button joinButton, createButton, leaveButton, startButton;
     [SerializeField] GameObject menu, lobby;
-    //Referência ao botão de iniciar partida
-    public Button buttonIniciarPartida;
+   
 
-    //Referência ao botão de recomeçar a partida
-    public Button buttonRecomecarPartida;
-
-    //Referência ao texto da UI de status
-    public Text textStatus;
 
     // Declara uma instância estática da classe MenuManager
     public static MenuManager instance;

@@ -8,7 +8,7 @@ using TMPro;
 public class ScoreUI : MonoBehaviourPunCallbacks
 {
     //Referência da UI de texto de pontuação
-    public Text textPontuacao;
+    public Text textScore;
 
     //Número do "Actor" do Photon PUN para ter a referência de quem pertence esta UI
     public int actorNumber;
@@ -23,7 +23,7 @@ public class ScoreUI : MonoBehaviourPunCallbacks
             int newScore = (int)changedProps["Pontuacao"];
 
             //Altera a UI para o jogador
-            textPontuacao.text = newScore.ToString();
+            textScore.text = newScore.ToString();
         }
     }
 }
