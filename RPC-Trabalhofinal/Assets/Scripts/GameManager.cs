@@ -50,14 +50,16 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private IEnumerator TimerCoroutine() // vai ta sendo responsável por contar e atualizar em tela o cronômetro
     {
-
-        while (tempoDePartidaAtual > 0 && !isGameOver)// vai ta aguardando 1 segundo para e atualiznso a interface
-        {
-            yield return new WaitForSeconds(1f);
-            tempoDePartidaAtual -= 1f;// //Diminui o tempo em 1 segundo
-            UptadeTimerUI();////Atualizar o tempo
-        }
-
+        
+       
+            while (tempoDePartidaAtual > 0 && !isGameOver)// vai ta aguardando 1 segundo para e atualiznso a interface
+            {
+                yield return new WaitForSeconds(1f);
+                tempoDePartidaAtual -= 1f;// //Diminui o tempo em 1 segundo
+                UptadeTimerUI();////Atualizar o tempo
+            }
+        
+       
    
         if (tempoDePartidaAtual <= 0 && !isGameOver)// finaliza o jogo se o tempo acabou
         {

@@ -121,7 +121,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614768868789991845}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -335,8 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e493efbe084e9ed469c4d66df9a163ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalizacaoSaidaShell: {fileID: 0}
-  _frequenciaShell: 1
+  LocalizacaoSaidaShell: {fileID: 2509674840806900587}
+  _frequenciaShell: 2
   _frequenciaShellAtual: 0
 --- !u!1 &5254576536926631720
 GameObject:
@@ -363,7 +363,7 @@ Transform:
   m_GameObject: {fileID: 5254576536926631720}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.17, y: 0, z: 0}
+  m_LocalPosition: {x: 1.17, y: -0.022, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
