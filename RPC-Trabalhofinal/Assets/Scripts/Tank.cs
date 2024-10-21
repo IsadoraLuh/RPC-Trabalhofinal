@@ -22,7 +22,7 @@ public class TanK : MonoBehaviourPun, IDamageable
 
     void Update()
     {
-        if (gm.ehGameOver)
+        if (gm.isGameOver)
         {
             return;
         }

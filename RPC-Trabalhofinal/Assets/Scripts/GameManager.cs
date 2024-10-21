@@ -14,17 +14,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Text textTimer;// texto do cronometro
     public float tempoDePartida = 120f;
     private float tempoDePartidaAtual = 0f;
-    public bool ehGameOver = false;//Boolean informando se o jogo finalizou
+    public bool isGameOver = false;//Boolean pra informar  se o jogo finalizou
 
 
     private void Start()
     {
-        photonView.RPC("StartGameforAl", RpcTarget.All);
+        photonView.RPC("StartGameforAll", RpcTarget.All);
     }
 
     public void StartGame() // vai ta iniciando a partida
     {
-        ehGameOver = false;
+        isGameOver = false;
         FindObjectOfType<Score>().ResetarScore(PhotonNetwork.LocalPlayer);
 
         //Faz o cronometro aparecer
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         var indiceJogador = (PhotonNetwork.LocalPlayer.ActorNumber -1) % localizacoesSpawn.Count; // ver o indece para saber onde o tank deve nascer
         var go = SpawnLocalization(PhotonNetwork.LocalPlayer);        //var go = localizacoesSpawn[indiceJogador];
-        var tanque = PhotonNetwork.Instantiate("TanquePrefab", go.transform.position, go.transform.rotation);// vai ta criando o tank onde deve nascer assim
+        var tanque = PhotonNetwork.Instantiate("TanquePrefab - Copy", go.transform.position, go.transform.rotation);// vai ta criando o tank onde deve nascer assim
     }
 
     public GameObject SpawnLocalization(Player player)
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private IEnumerator TimerCoroutine() // vai ta sendo responsável por contar e atualizar em tela o cronômetro
     {
 
-        while (tempoDePartidaAtual > 0 && !ehGameOver)// vai ta aguardando 1 segundo para e atualiznso a interface
+        while (tempoDePartidaAtual > 0 && !isGameOver)// vai ta aguardando 1 segundo para e atualiznso a interface
         {
             yield return new WaitForSeconds(1f);
             tempoDePartidaAtual -= 1f;// //Diminui o tempo em 1 segundo
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
    
-        if (tempoDePartidaAtual <= 0 && !ehGameOver)// finaliza o jogo se o tempo acabou
+        if (tempoDePartidaAtual <= 0 && !isGameOver)// finaliza o jogo se o tempo acabou
         {
             if (PhotonNetwork.IsMasterClient) // so host efetua o termino na partida
             {
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void EndGame() // vai ta sendo responsavel por finalizar o jogo
     {
         
-        ehGameOver = true;//Marcar o jogo como finalizado
+        isGameOver = true;//Marcar o jogo como finalizado
 
         FindObjectsByType<TanK>(FindObjectsSortMode.None).ToList().ForEach(tank =>
         {
@@ -93,8 +93,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartGameforAll()
     {
-        var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();// vcai ta procurando o objeto pta iniciar a partida
-        gameManager.StartGame();
+        StartGame();
     }
 
  

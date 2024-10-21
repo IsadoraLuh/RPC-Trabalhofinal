@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2098244634570191805}
   - component: {fileID: 6761717216802563079}
   m_Layer: 0
-  m_Name: TanquePrefab
+  m_Name: TanquePrefab - Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
