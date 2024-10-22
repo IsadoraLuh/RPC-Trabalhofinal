@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartGame() // Vai iniciar a partida
     {
         isGameOver = false;
-        FindObjectOfType<Score>().ResetarScore(PhotonNetwork.LocalPlayer);
+       FindObjectOfType<Score>().ResetarScore(PhotonNetwork.LocalPlayer);
 
         // Configurar o cronômetro
         tempoDePartidaAtual = tempoDePartida;
@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.Destroy(tank.gameObject);
             }
         });
+
+    
     }
 
     [PunRPC]
